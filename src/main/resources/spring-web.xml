@@ -23,6 +23,23 @@
     <!-- 启动对@Aspect注解的支持，也就是将ControllerLogAspect进行注入 -->
     <aop:aspectj-autoproxy proxy-target-class="false"/>
 
+    <!-- 添加拦截器 -->
+    <mvc:interceptors>
+
+        <!-- 配置第1个拦截器 -->
+        <mvc:interceptor>
+            <!-- 指定拦截路径，不在拦截路径之内的将不予处理，即拦截器根本就不运行 -->
+            <mvc:mapping path="/**"/>
+            <!-- 指定拦截忽略路径，登录，jdbcDemoController，healthController不需要判断是否登录 -->
+            <mvc:exclude-mapping path="/consumer/login"/>
+            <mvc:exclude-mapping path="/demo/**"/>
+            <mvc:exclude-mapping path="/"/>
+            <!-- 指定拦截器类 -->
+            <bean class="com.wangfan.little.project.spring.interceptor.LoginInterceptor" />
+        </mvc:interceptor>
+
+    </mvc:interceptors>
+
     <!--&lt;!&ndash; 加载properties配置文件   &ndash;&gt;-->
     <!--<context:property-placeholder location="classpath:*.properties" ignore-unresolvable="true" />-->
 
